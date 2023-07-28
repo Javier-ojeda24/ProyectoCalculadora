@@ -11,7 +11,33 @@ export const CalculadoraScreen = () => {
     setnumero('0');
   };
   const armarNumero = (numeroTexto: string) => {
-    setnumero(numero + numeroTexto);
+    //    validaciones
+    // No aceptar doble punto
+    if (numero.includes('.') && numeroTexto === '.') return;
+    if (numero.startsWith('0') || numero.startsWith('-0')) {
+      // Preguntar si es el primer punto decimal
+      if (numeroTexto === '.') {
+        setnumero(numero + numeroTexto);
+        // Evaluar si es otro createContext, y hay un punto
+      } else if (numeroTexto === '0' && numero.includes('.')) {
+        setnumero(numero + numeroTexto);
+        // evaluar si es diferente de cero y no tiene un punto
+      } else if (numeroTexto !== '0' && !numero.includes('.')) {
+        setnumero(numeroTexto);
+        // Evitar 000.0
+      } else if (numeroTexto === '0' && !numero.includes('.')) {
+        setnumero(numero);
+      }
+    } else {
+      setnumero(numero + numeroTexto);
+    }
+  };
+  const positivoNegativo = () => {
+    if (numero.includes('-')) {
+      setnumero(numero.replace('-', ''));
+    } else {
+      setnumero('-' + numero);
+    }
   };
 
   return (
@@ -24,7 +50,7 @@ export const CalculadoraScreen = () => {
       <View style={styles.fila}>
         {/* fila de Botone  */}
         <BotonCal texto="C" color="#9b9b9b" accion={limpiar} />
-        <BotonCal texto="+/-" color="#9b9b9b" accion={limpiar} />
+        <BotonCal texto="+/-" color="#9b9b9b" accion={positivoNegativo} />
         <BotonCal texto="del" color="#9b9b9b" accion={limpiar} />
         <BotonCal texto="/" color="#ff9427" accion={limpiar} />
       </View>
