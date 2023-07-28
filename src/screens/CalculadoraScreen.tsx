@@ -39,7 +39,7 @@ export const CalculadoraScreen = () => {
       </View>
       <View style={styles.fila}>
         {/* fila de Botone  */}
-        <BotonCal texto="0" />
+        <BotonCal texto="0" ancho />
         <BotonCal texto="." />
         <BotonCal texto="=" color="#ff9427" />
       </View>
