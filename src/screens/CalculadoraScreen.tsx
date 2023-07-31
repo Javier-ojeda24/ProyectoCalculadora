@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {Text, View} from 'react-native';
+import {Platform, Text, ToastAndroid, View} from 'react-native';
 import {styles} from '../theme/appTheme';
 import {BotonCal} from '../components/BotonCal';
 
@@ -96,7 +96,20 @@ export const CalculadoraScreen = () => {
         setnumero(`${num2 - num1}`);
         break;
       case Operadores.dividir:
-        setnumero(`${num2 / num1}`);
+        if (num1 !== 0) {
+          {
+            setnumero(`${num2 / num1}`);
+          }
+        } else {
+          if (Platform.OS !== 'ios') {
+            ToastAndroid.show(
+              'No se puede dividir con cero',
+              ToastAndroid.LONG,
+            );
+          } else {
+            setnumero('0');
+          }
+        }
         break;
       case Operadores.multiplicar:
         setnumero(`${num1 * num2}`);
